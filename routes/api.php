@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\Api\FarmController;
@@ -15,3 +16,9 @@ Route::get('/animals/{id}', [AnimalController::class, 'show'])->name('animals.sh
 Route::post('/animals', [AnimalController::class, 'store'])->name('animals.store');
 Route::patch('/animals/{id}', [AnimalController::class, 'update'])->name('animals.update');
 Route::delete('/animals/{id}', [AnimalController::class, 'destroy'])->name('animals.destroy');
+
+Route::get('/cages', [CageController::class, 'index'])->name('cages.index');
+Route::get('/cages/{id}', [CageController::class, 'show'])->name('cages.show');
+Route::post('/cages', [CageController::class, 'store'])->name('cages.store');
+Route::patch('/cages/{id}', [CageController::class, 'update'])->name('cages.update');
+Route::delete('/cages/{id}', [CageController::class, 'destroy'])->name('cages.destroy');
