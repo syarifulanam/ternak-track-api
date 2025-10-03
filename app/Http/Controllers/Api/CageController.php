@@ -12,10 +12,12 @@ class CageController extends Controller
 {
     use ApiResponse;
 
-    public function index()
+    public function index(Request $request)
     {
-        $cages = Cage::with('farm')->get();
-        return response()->json($cages);
+        $perPage = $request->get('per_page', 10);
+        $cages = Cage::with('farm')->orderBy('created_at', 'desc')->paginate($perPage);
+
+        return $this->paginatedResponse($cages, 'Cage list retrieved successfully');
     }
 
     public function store(Request $request)

@@ -11,9 +11,12 @@ class FarmController extends Controller
 {
     use ApiResponse;
 
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(Farm::all());
+        $perPage = $request->get('per_page', 10); 
+        $farms = Farm::orderBy('created_at', 'desc')->paginate($perPage);
+
+        return $this->paginatedResponse($farms, 'Farm list retrieved successfully');
     }
 
     public function store(Request $request)
