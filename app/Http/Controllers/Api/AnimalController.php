@@ -12,17 +12,15 @@ class AnimalController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->get('per_page', 10); // default 10
-        $animals = Animal::with(['cage', 'sire', 'dam'])
-            ->orderBy('created_at', 'desc')
-            ->paginate($perPage);
+        $perPage = $request->get('per_page', 10);
+        $animals = Animal::with(['sire', 'dam'])->orderBy('created_at', 'desc')->paginate($perPage);
 
         return $this->paginatedResponse($animals, 'Animal list retrieved successfully');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'qr_code' => 'required|unique:animals,qr_code',
             'species' => 'required|string|max:255',
             'birth_date' => 'nullable|date',
@@ -33,21 +31,22 @@ class AnimalController extends Controller
             'cage_id' => 'nullable|exists:cages,id',
         ]);
 
-        $animal = Animal::create($request->all());
-        return response()->json($animal, 201);
+        $animal = Animal::create($validated);
+
+        return $this->successResponse($animal, 'Animal created successfully', 201);
     }
 
     public function show(string $id)
     {
         $animal = Animal::with(['cage', 'sire', 'dam'])->findOrFail($id);
-        return response()->json($animal);
+        return $this->successResponse($animal, 'Animal retrieved successfully');
     }
 
     public function update(Request $request, string $id)
     {
         $animal = Animal::findOrFail($id);
 
-        $request->validate([
+        $validated = $request->validate([
             'qr_code' => 'sometimes|unique:animals,qr_code,' . $animal->id,
             'species' => 'sometimes|string|max:255',
             'birth_date' => 'nullable|date',
@@ -58,8 +57,9 @@ class AnimalController extends Controller
             'cage_id' => 'nullable|exists:cages,id',
         ]);
 
-        $animal->update($request->all());
-        return response()->json($animal);
+        $animal->update($validated);
+
+        return $this->successResponse($animal, 'Animal updated successfully');
     }
 
     public function destroy(string $id)
@@ -67,6 +67,6 @@ class AnimalController extends Controller
         $animal = Animal::findOrFail($id);
         $animal->delete();
 
-        return response()->json(['message' => 'Animal deleted successfully']);
+        return $this->successResponse(null, 'Animal deleted successfully', 200);
     }
 }

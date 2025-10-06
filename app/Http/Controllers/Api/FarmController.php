@@ -13,50 +13,43 @@ class FarmController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->get('per_page', 10); 
-        $farms = Farm::orderBy('created_at', 'desc')->paginate($perPage);
+        $perPage = $request->get('per_page', 10);
+        $farms = Farm::with('cage')->orderBy('created_at', 'desc')->paginate($perPage);
 
         return $this->paginatedResponse($farms, 'Farm list retrieved successfully');
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name'    => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'owner'   => 'required|string|max:255',
         ]);
 
-        $farm = Farm::create($request->all());
-
-        return response()->json([
-            'message' => 'Farm created successfully',
-            'data' => $farm
-        ], 201);
+        $farm = Farm::create($validated);
+        return $this->successResponse($farm, 'Farm created successfully', 201);
     }
 
     public function show(string $id)
     {
-        $farm = Farm::findOrFail($id);
-        return response()->json($farm);
+        $farm = Farm::with('cage')->findOrFail($id);
+        return $this->successResponse($farm, 'Farm retrieved successfully');
     }
 
     public function update(Request $request, string $id)
     {
         $farm = Farm::findOrFail($id);
 
-        $request->validate([
+        $validated = $request->validate([
             'name'    => 'sometimes|required|string|max:255',
             'address' => 'sometimes|required|string|max:255',
             'owner'   => 'sometimes|required|string|max:255',
         ]);
 
-        $farm->update($request->all());
+        $farm->update($validated);
 
-        return response()->json([
-            'message' => 'Farm updated successfully',
-            'data' => $farm
-        ]);
+        return $this->successResponse($farm, 'Farm updated successfully');
     }
 
     public function destroy(string $id)
@@ -64,8 +57,6 @@ class FarmController extends Controller
         $farm = Farm::findOrFail($id);
         $farm->delete();
 
-        return response()->json([
-            'message' => 'Farm deleted successfully'
-        ]);
+        return $this->successResponse(null, 'Farm deleted successfully', 204);
     }
 }
