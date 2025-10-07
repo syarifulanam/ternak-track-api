@@ -19,4 +19,9 @@ class Animal extends Model
         'dam_id',
         'cage_id',
     ];
+
+    public function growths()
+    {
+        return $this->hasMany(growth::class);
+    }
 }
