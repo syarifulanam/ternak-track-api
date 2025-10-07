@@ -24,8 +24,8 @@ Route::post('/animals', [AnimalController::class, 'store'])->name('animals.store
 Route::patch('/animals/{id}', [AnimalController::class, 'update'])->name('animals.update');
 Route::delete('/animals/{id}', [AnimalController::class, 'destroy'])->name('animals.destroy');
 
-Route::get('/growth', [GrowthController::class, 'index'])->name('growth.index');
-Route::get('/growth/{id}', [GrowthController::class, 'show'])->name('growth.show');
-Route::post('/growth', [GrowthController::class, 'store'])->name('growth.store');
-Route::patch('/growth/{id}', [GrowthController::class, 'update'])->name('growth.update');
-Route::delete('/growth/{id}', [GrowthController::class, 'destroy'])->name('growth.destroy');
+Route::get('/growths', [GrowthController::class, 'index'])->name('growths.index');
+Route::get('/growths/{id}', [GrowthController::class, 'show'])->name('growths.show');
+Route::post('/growths', [GrowthController::class, 'store'])->name('growths.store');
+Route::patch('/growths/{id}', [GrowthController::class, 'update'])->name('growths.update');
+Route::delete('/growths/{id}', [GrowthController::class, 'destroy'])->name('growths.destroy');

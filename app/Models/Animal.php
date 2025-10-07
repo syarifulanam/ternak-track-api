@@ -20,7 +20,7 @@ class Animal extends Model
         'cage_id',
     ];
 
-    public function growthRecords()
+    public function growths()
     {
         return $this->hasMany(growth::class);
     }

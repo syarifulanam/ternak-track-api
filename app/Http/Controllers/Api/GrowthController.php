@@ -34,7 +34,7 @@ class GrowthController extends Controller
 
     public function show(string $id)
     {
-        $growths = Growth::with('animals')->findOrFail($id);
+        $growths = Growth::with('animal')->findOrFail($id);
         return $this->successResponse($growths, 'Growth records retrieved successfully');
     }
 

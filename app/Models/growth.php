@@ -9,6 +9,8 @@ class growth extends Model
 {
     use HasFactory;
 
+    protected $table = 'growth_records';
+
     protected $fillable = [
         'animal_id',
         'record_date',
