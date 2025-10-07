@@ -37,7 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->json([
                     'code' => 404,
                     'success' => false,
-                    'message' => 'Route not found',
+                    'message' => 'Data not found',
                     'error' => 'The requested API endpoint does not exist'
                 ], 404);
             }

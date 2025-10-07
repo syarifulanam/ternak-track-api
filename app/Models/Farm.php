@@ -14,4 +14,9 @@ class Farm extends Model
         'address',
         'owner',
     ];
+
+    public function cage()
+    {
+        return $this->hasMany(Cage::class);
+    }
 }
