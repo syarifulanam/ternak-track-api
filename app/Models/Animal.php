@@ -34,4 +34,9 @@ class Animal extends Model
     {
         return $this->hasMany(Vaccination::class);
     }
+
+    public function feedingRecords()
+    {
+        return $this->hasMany(FeedingRecord::class);
+    }
 }
