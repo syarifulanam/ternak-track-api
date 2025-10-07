@@ -15,7 +15,7 @@ class CageController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
-        $cages = Cage::orderBy('created_at', 'desc')->paginate($perPage);
+        $cages = Cage::with(['animals', 'farm'])->orderBy('created_at', 'desc')->paginate($perPage);
 
         return $this->paginatedResponse($cages, 'Cage list retrieved successfully');
     }
@@ -35,7 +35,7 @@ class CageController extends Controller
 
     public function show(string $id)
     {
-        $cage = Cage::with('animal')->findOrFail($id);
+        $cage = Cage::with('animals', 'farm')->findOrFail($id);
         return $this->successResponse($cage, 'Cage retrieved successfully');
     }
 
