@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Api\CageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AnimalController;
+use App\Http\Controllers\Api\CageController;
 use App\Http\Controllers\Api\FarmController;
+use App\Http\Controllers\Api\AnimalController;
 use App\Http\Controllers\Api\GrowthController;
+use App\Http\Controllers\Api\HealthRecordController;
 
 Route::get('/farms', [FarmController::class, 'index'])->name('farms.index');
 Route::get('/farms/{id}', [FarmController::class, 'show'])->name('farms.show');
@@ -29,3 +30,9 @@ Route::get('/growths/{id}', [GrowthController::class, 'show'])->name('growths.sh
 Route::post('/growths', [GrowthController::class, 'store'])->name('growths.store');
 Route::patch('/growths/{id}', [GrowthController::class, 'update'])->name('growths.update');
 Route::delete('/growths/{id}', [GrowthController::class, 'destroy'])->name('growths.destroy');
+
+Route::get('/health', [HealthRecordController::class, 'index'])->name('Health.index');
+Route::get('/health/{id}', [HealthRecordController::class, 'show'])->name('Health.show');
+Route::post('/health', [HealthRecordController::class, 'store'])->name('Health.store');
+Route::patch('/health/{id}', [HealthRecordController::class, 'update'])->name('Health.update');
+Route::delete('/health/{id}', [HealthRecordController::class, 'destroy'])->name('Health.destroy');
