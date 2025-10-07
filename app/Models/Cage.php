@@ -15,8 +15,8 @@ class Cage extends Model
         'capacity',
     ];
 
-    // public function animal()
-    // {
-    //     return $this->hasMany(Animal::class);
-    // }
+    public function animal()
+    {
+        return $this->hasMany(Animal::class);
+    }
 }

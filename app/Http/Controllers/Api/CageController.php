@@ -44,7 +44,6 @@ class CageController extends Controller
         $cage = Cage::findOrFail($id);
 
         $validated = $request->validate([
-            'farm_id'  => 'sometimes|exists:farms,id',
             'name'     => 'sometimes|string|max:255',
             'capacity' => 'sometimes|integer',
         ]);

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Api\CageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\Api\AnimalController;
 use App\Http\Controllers\Api\FarmController;
 
 Route::get('/farms', [FarmController::class, 'index'])->name('farms.index');

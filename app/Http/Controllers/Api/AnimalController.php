@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Models\Animal;
 use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AnimalController extends Controller
 {
@@ -26,8 +27,6 @@ class AnimalController extends Controller
             'birth_date' => 'nullable|date',
             'gender' => 'required|in:male,female',
             'status' => 'nullable|string|max:100',
-            'sire_id' => 'nullable|exists:animals,id',
-            'dam_id' => 'nullable|exists:animals,id',
             'cage_id' => 'nullable|exists:cages,id',
         ]);
 
@@ -38,7 +37,7 @@ class AnimalController extends Controller
 
     public function show(string $id)
     {
-        $animal = Animal::with(['cage', 'sire', 'dam'])->findOrFail($id);
+        $animal = Animal::findOrFail($id);
         return $this->successResponse($animal, 'Animal retrieved successfully');
     }
 
@@ -52,8 +51,6 @@ class AnimalController extends Controller
             'birth_date' => 'nullable|date',
             'gender' => 'sometimes|in:male,female',
             'status' => 'nullable|string|max:100',
-            'sire_id' => 'nullable|exists:animals,id',
-            'dam_id' => 'nullable|exists:animals,id',
             'cage_id' => 'nullable|exists:cages,id',
         ]);
 
@@ -67,6 +64,6 @@ class AnimalController extends Controller
         $animal = Animal::findOrFail($id);
         $animal->delete();
 
-        return $this->successResponse(null, 'Animal deleted successfully', 200);
+        return $this->successResponse(null, 'Animal deleted successfully', 204);
     }
 }
