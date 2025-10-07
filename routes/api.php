@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CageController;
 use App\Http\Controllers\Api\FarmController;
 use App\Http\Controllers\Api\AnimalController;
+use App\Http\Controllers\Api\FeedingRecordController;
 use App\Http\Controllers\Api\GrowthController;
 use App\Http\Controllers\Api\HealthRecordController;
 use App\Http\Controllers\Api\VaccinationController;
@@ -43,3 +44,9 @@ Route::get('/vaccinations/{id}', [VaccinationController::class, 'show'])->name('
 Route::post('/vaccinations', [VaccinationController::class, 'store'])->name('vaccinations.store');
 Route::patch('/vaccinations/{id}', [VaccinationController::class, 'update'])->name('vaccinations.update');
 Route::delete('/vaccinations/{id}', [VaccinationController::class, 'destroy'])->name('vaccinations.destroy');
+
+Route::get('/feedings', [FeedingRecordController::class, 'index'])->name('feedings.index');
+Route::get('/feedings/{id}', [FeedingRecordController::class, 'show'])->name('feedings.show');
+Route::post('/feedings', [FeedingRecordController::class, 'store'])->name('feedings.store');
+Route::patch('/feedings/{id}', [FeedingRecordController::class, 'update'])->name('feedings.update');
+Route::delete('/feedings/{id}', [FeedingRecordController::class, 'destroy'])->name('feedings.destroy');
