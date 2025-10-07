@@ -15,7 +15,7 @@ class Farm extends Model
         'owner',
     ];
 
-    public function cages()
+    public function cage()
     {
         return $this->hasMany(Cage::class);
     }

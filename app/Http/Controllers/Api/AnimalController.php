@@ -13,9 +13,9 @@ class AnimalController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
-        $animals = Animal::with(['sire', 'dam'])->orderBy('created_at', 'desc')->paginate($perPage);
+        $animal = Animal::orderBy('created_at', 'desc')->paginate($perPage);
 
-        return $this->paginatedResponse($animals, 'Animal list retrieved successfully');
+        return $this->paginatedResponse($animal, 'Animal list retrieved successfully');
     }
 
     public function store(Request $request)

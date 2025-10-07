@@ -15,7 +15,7 @@ class CageController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
-        $cages = Cage::with('animal')->orderBy('created_at', 'desc')->paginate($perPage);
+        $cages = Cage::orderBy('created_at', 'desc')->paginate($perPage);
 
         return $this->paginatedResponse($cages, 'Cage list retrieved successfully');
     }
