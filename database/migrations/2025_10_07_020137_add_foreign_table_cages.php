@@ -12,14 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('animals', function (Blueprint $table) {
-            // Tambah kolom jika belum ada
             $table->unsignedBigInteger('cage_id')->after('id')->nullable();
 
-            // Tambah foreign key
             $table->foreign('cage_id')
                 ->references('id')
                 ->on('cages')
-                ->onDelete('cascade'); // optional: bisa juga 'set null', 'restrict', dll
+                ->onDelete('cascade'); 
         });
     }
     /**
