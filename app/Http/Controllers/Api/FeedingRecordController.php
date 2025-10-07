@@ -13,7 +13,7 @@ class FeedingRecordController extends Controller
 
     public function index(Request $request)
     {
-        $perPage = $request->get('per_page', 10); // default 10
+        $perPage = $request->get('per_page', 10); 
         $feedingRecords = FeedingRecord::with('animal')->orderBy('created_at', 'desc')->paginate($perPage);
         return $this->paginatedResponse($feedingRecords, 'Feeding Records list retrieved successfully');
     }

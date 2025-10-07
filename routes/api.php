@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CageController;
 use App\Http\Controllers\Api\FarmController;
 use App\Http\Controllers\Api\AnimalController;
+use App\Http\Controllers\Api\BreedingController;
 use App\Http\Controllers\Api\FeedingRecordController;
 use App\Http\Controllers\Api\GrowthController;
 use App\Http\Controllers\Api\HealthRecordController;
@@ -50,3 +51,9 @@ Route::get('/feedings/{id}', [FeedingRecordController::class, 'show'])->name('fe
 Route::post('/feedings', [FeedingRecordController::class, 'store'])->name('feedings.store');
 Route::patch('/feedings/{id}', [FeedingRecordController::class, 'update'])->name('feedings.update');
 Route::delete('/feedings/{id}', [FeedingRecordController::class, 'destroy'])->name('feedings.destroy');
+
+Route::get('/breedings', [BreedingController::class, 'index'])->name('breedings.index');
+Route::get('/breedings/{id}', [BreedingController::class, 'show'])->name('breedings.show');
+Route::post('/breedings', [BreedingController::class, 'store'])->name('breedings.store');
+Route::patch('/breedings/{id}', [BreedingController::class, 'update'])->name('breedings.update');
+Route::delete('/breedings/{id}', [BreedingController::class, 'destroy'])->name('breedings.destroy');
