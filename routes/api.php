@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\FarmController;
 use App\Http\Controllers\Api\AnimalController;
 use App\Http\Controllers\Api\GrowthController;
 use App\Http\Controllers\Api\HealthRecordController;
+use App\Http\Controllers\Api\VaccinationController;
 
 Route::get('/farms', [FarmController::class, 'index'])->name('farms.index');
 Route::get('/farms/{id}', [FarmController::class, 'show'])->name('farms.show');
@@ -36,3 +37,9 @@ Route::get('/health/{id}', [HealthRecordController::class, 'show'])->name('Healt
 Route::post('/health', [HealthRecordController::class, 'store'])->name('Health.store');
 Route::patch('/health/{id}', [HealthRecordController::class, 'update'])->name('Health.update');
 Route::delete('/health/{id}', [HealthRecordController::class, 'destroy'])->name('Health.destroy');
+
+Route::get('/vaccinations', [VaccinationController::class, 'index'])->name('vaccinations.index');
+Route::get('/vaccinations/{id}', [VaccinationController::class, 'show'])->name('vaccinations.show');
+Route::post('/vaccinations', [VaccinationController::class, 'store'])->name('vaccinations.store');
+Route::patch('/vaccinations/{id}', [VaccinationController::class, 'update'])->name('vaccinations.update');
+Route::delete('/vaccinations/{id}', [VaccinationController::class, 'destroy'])->name('vaccinations.destroy');
