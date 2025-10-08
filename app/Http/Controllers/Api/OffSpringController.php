@@ -7,16 +7,16 @@ use App\Models\OffSpring;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponse;
 
-class OffSpringController extends Controller
+class OffspringController extends Controller
 {
     use ApiResponse;
 
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
-        $offSprings = OffSpring::with('animal')->orderBy('created_at', 'desc')->paginate($perPage);
+        $offsprings = Offspring::with('animal')->orderBy('created_at', 'desc')->paginate($perPage);
 
-        return $this->paginatedResponse($offSprings, 'OffSpring list retrieved successfully');
+        return $this->paginatedResponse($offsprings, 'OffSpring list retrieved successfully');
     }
 
 
@@ -29,19 +29,19 @@ class OffSpringController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        $offSprings = OffSpring::create($validated);
-        return $this->successResponse($offSprings, 'OffSpring created successfully', 201);
+        $offsprings = Offspring::create($validated);
+        return $this->successResponse($offsprings, 'OffSpring created successfully', 201);
     }
 
     public function show(string $id)
     {
-        $offSprings = OffSpring::with('customer')->findOrFail($id);
-        return $this->successResponse($offSprings, 'OffSpring retrieved successfully');
+        $offsprings = Offspring::with('animal')->findOrFail($id);
+        return $this->successResponse($offsprings, 'OffSpring retrieved successfully');
     }
 
     public function update(Request $request, string $id)
     {
-        $offSprings = OffSpring::findOrFail($id);
+        $offsprings = Offspring::findOrFail($id);
 
         $validated = $request->validate([
             'parent_id' => 'sometimes|required|exists:animals,id',
@@ -50,14 +50,14 @@ class OffSpringController extends Controller
             'notes' => 'sometimes|nullable|string',
         ]);
 
-        $offSprings->update($validated);
-        return $this->successResponse($offSprings, 'OffSpring updated successfully');
+        $offsprings->update($validated);
+        return $this->successResponse($offsprings, 'OffSpring updated successfully');
     }
 
     public function destroy(string $id)
     {
-        $offSprings = OffSpring::findOrFail($id);
-        $offSprings->delete();
+        $offsprings = Offspring::findOrFail($id);
+        $offsprings->delete();
         return $this->successResponse(null, 'OffSpring deleted successfully', 204);
     }
 }
