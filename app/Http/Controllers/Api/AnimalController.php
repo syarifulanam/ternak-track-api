@@ -27,6 +27,10 @@ class AnimalController extends Controller
             'birth_date' => 'nullable|date',
             'gender' => 'required|in:male,female',
             'status' => 'nullable|string|max:100',
+            // 'child_id' => 'nullable|exists:animals,id', 
+            // 'parent_id' => 'required|exists:animals,id',
+            // 'dam_id' => 'required|exists:animals,id',
+            // 'sire_id' => 'required|exists:animals,id',
             'cage_id' => 'nullable|exists:cages,id',
         ]);
 
@@ -51,6 +55,10 @@ class AnimalController extends Controller
             'birth_date' => 'nullable|date',
             'gender' => 'sometimes|in:male,female',
             'status' => 'nullable|string|max:100',
+            // 'child_id' => 'sometimes|required|exists:animals,id',
+            // 'parent_id' =>  'sometimes|required|exists:animals,id',
+            // 'dam_id' => 'sometimes|required|exists:animals,id',
+            // 'sire_id' => 'sometimes|required|exists:animals,id',
             'cage_id' => 'nullable|exists:cages,id',
         ]);
 

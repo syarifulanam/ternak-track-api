@@ -44,4 +44,9 @@ class Animal extends Model
     {
         return $this->hasMany(breeding::class);
     }
+
+    public function offSprings()
+    {
+        return $this->hasMany(offSpring::class);
+    }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\BreedingController;
 use App\Http\Controllers\Api\FeedingRecordController;
 use App\Http\Controllers\Api\GrowthController;
 use App\Http\Controllers\Api\HealthRecordController;
+use App\Http\Controllers\Api\OffSpringController;
 use App\Http\Controllers\Api\VaccinationController;
 
 Route::get('/farms', [FarmController::class, 'index'])->name('farms.index');
@@ -57,3 +58,9 @@ Route::get('/breedings/{id}', [BreedingController::class, 'show'])->name('breedi
 Route::post('/breedings', [BreedingController::class, 'store'])->name('breedings.store');
 Route::patch('/breedings/{id}', [BreedingController::class, 'update'])->name('breedings.update');
 Route::delete('/breedings/{id}', [BreedingController::class, 'destroy'])->name('breedings.destroy');
+
+Route::get('/offsprings', [OffSpringController::class, 'index'])->name('offsprings.index');
+Route::get('/offsprings/{id}', [OffSpringController::class, 'show'])->name('offsprings.show');
+Route::post('/offsprings', [OffSpringController::class, 'store'])->name('offsprings.store');
+Route::patch('/offsprings/{id}', [OffSpringController::class, 'update'])->name('offsprings.update');
+Route::delete('/offsprings/{id}', [OffSpringController::class, 'destroy'])->name('offsprings.destroy');
