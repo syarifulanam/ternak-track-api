@@ -16,4 +16,9 @@ class Sale extends Model
         'price',
         'notes',
     ];
+
+    public function animal()
+    {
+        return $this->belongsTo(Animal::class);
+    }
 }

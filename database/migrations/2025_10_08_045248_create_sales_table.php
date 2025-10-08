@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('animal_id');
             $table->date('sale_date');
             $table->string('buyer');
-            $table->decimal('price');
+            $table->decimal('price', 15, 2);
             $table->text('notes')->nullable();
             $table->timestamps();
         });
