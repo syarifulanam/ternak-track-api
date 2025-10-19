@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\FarmController;
+use App\Http\Controllers\FarmController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
