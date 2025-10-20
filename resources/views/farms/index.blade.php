@@ -77,12 +77,30 @@
             });
 
             $('.editFarm').click(function() {
-                const tr = $(this).closest('tr');
-                $('#farm_id').val(tr.data('id'));
-                $('#name').val(tr.find('.name').text());
-                $('#owner').val(tr.find('.owner').text());
-                $('#address').val(tr.find('.address').text());
-                modal.show();
+                const id = $(this).closest('tr').data('id');
+                const $btn = $(this);
+
+                $btn.prop('disabled', true).text('Loading...');
+
+                $.ajax({
+                    url: `/farms/${id}`,
+                    method: 'GET',
+                    success: function(response) {
+                        const farm = response.farm;
+                        $('#farm_id').val(farm.id);
+                        $('#name').val(farm.name);
+                        $('#owner').val(farm.owner);
+                        $('#address').val(farm.address || '');
+
+                        modal.show();
+                    },
+                    error: function() {
+                        showToast('Failed to load farm data.', 'danger');
+                    },
+                    complete: function() {
+                        $btn.prop('disabled', false).text('Edit');
+                    }
+                });
             });
 
             let deleteId = null;
