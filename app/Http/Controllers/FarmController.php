@@ -10,10 +10,23 @@ class FarmController extends Controller
     public function index(Request $request)
     {
         $perPage = $request->get('per_page', 10);
-        $farms = Farm::latest()->paginate($perPage);
+        $search = $request->get('search');
+        $searchOwner = $request->get('search_owner');
+
+        $query = Farm::latest();
+
+        if ($search) {
+            $query->where('name', 'LIKE', '%' . $search . '%');
+        }
+
+        if ($searchOwner) {
+            $query->where('owner', 'LIKE', '%' . $searchOwner . '%');
+        }
+
+        $farms = $query->paginate($perPage);
 
         $farms->appends($request->query());
-        return view('farms.index', compact('farms'));
+        return view('farms.index', compact('farms', 'search', 'searchOwner'));
     }
 
     public function store(Request $request)
