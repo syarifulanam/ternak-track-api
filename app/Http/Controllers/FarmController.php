@@ -26,6 +26,12 @@ class FarmController extends Controller
         return response()->json(['status' => 'success', 'farms' => $farm]);
     }
 
+    public function show($id)
+    {
+        $farm = Farm::findOrFail($id);
+        return response()->json(['status' => 'success', 'farm' => $farm]);
+    }
+
     public function update(Request $request, $id)
     {
         $farm = Farm::findOrFail($id);
