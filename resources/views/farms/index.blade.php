@@ -3,7 +3,7 @@
 @section('content')
     <div class="card shadow-sm">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h6 class="mb-0">Farms</h6>
+            <h6 class="mb-0">List Farms</h6>
             <div class="d-flex gap-2">
                 <select class="form-select form-select-sm" id="perPageSelect" style="width: auto;">
                     <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 per page</option>
@@ -29,9 +29,9 @@
                     @forelse ($farms as $i => $f)
                         <tr data-id="{{ $f->id }}">
                             <td>{{ ($farms->currentPage() - 1) * $farms->perPage() + $loop->iteration }}</td>
-                            <td class="name">{{ $f->name }}</td>
-                            <td class="owner">{{ $f->owner }}</td>
-                            <td class="address">{{ $f->address }}</td>
+                            <td class="name" style="text-align: left;">{{ $f->name }}</td>
+                            <td class="owner" style="text-align: left;">{{ $f->owner }}</td>
+                            <td class="address" style="text-align: left;">{{ $f->address }}</td>
                             <td>
                                 <button class="btn btn-sm btn-warning editFarm">Edit</button>
                                 <button class="btn btn-sm btn-danger deleteFarm">Delete</button>
