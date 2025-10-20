@@ -34,7 +34,8 @@
             </table>
         </div>
     </div>
-
+    @include('components.toast_message')
+    @include('components.modal_delete')
     @include('components.modal_farm')
 @endsection
 
@@ -70,7 +71,7 @@
                     },
                     error: function(xhr) {
                         alert('Error: ' + (xhr.responseJSON?.message ||
-                        'Something went wrong'));
+                            'Something went wrong'));
                     }
                 });
             });
@@ -84,21 +85,29 @@
                 modal.show();
             });
 
+            let deleteId = null;
             $('.deleteFarm').click(function() {
-                if (!confirm('Are you sure want to delete this farm?')) return;
-                const id = $(this).closest('tr').data('id');
+                deleteId = $(this).closest('tr').data('id');
+                $('#confirmDeleteModal').modal('show');
+            });
+
+            $('#btnConfirmDelete').click(function() {
+                if (!deleteId) return;
 
                 $.ajax({
-                    url: `/farms/${id}`,
+                    url: `/farms/${deleteId}`,
                     method: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}'
                     },
                     success: function() {
+                        $('#confirmDeleteModal').modal('hide');
                         location.reload();
+                        showToast('Data berhasil dihapus.', 'success');
                     },
                     error: function() {
-                        alert('Failed to delete');
+                        $('#confirmDeleteModal').modal('hide');
+                        showToast('Gagal menghapus data.', 'danger');
                     }
                 });
             });
