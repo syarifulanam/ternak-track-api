@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 
 class FarmController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $farms = Farm::latest()->get();
+        $perPage = $request->get('per_page', 10);
+        $farms = Farm::latest()->paginate($perPage);
+
+        $farms->appends($request->query());
         return view('farms.index', compact('farms'));
     }
 
