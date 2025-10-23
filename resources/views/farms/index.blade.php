@@ -17,7 +17,6 @@
                     </div>
                     <div class="col-md-4 d-flex align-items-end">
                         <div class="d-flex gap-2 w-100">
-                            <!-- Hidden inputs to maintain other parameters -->
                             <input type="hidden" name="per_page" value="{{ request('per_page', 10) }}">
 
                             <button type="submit" class="btn btn-primary">
@@ -116,69 +115,82 @@
 @section('scripts')
     <script>
         $(function() {
-            const modal = new bootstrap.Modal('#farmModal');
+            $(document).on('keyup', function(e) {
+                if (e.key === 'Escape') {
+                    $('.modal.show').modal('hide');
+                }
+            });
+
+            $('.modal').on('click', function(e) {
+                if (e.target === this) {
+                    $(this).modal('hide');
+                }
+            });
 
             $('#addFarmBtn').click(function() {
-                $('#farmForm')[0].reset();
+                $('#farmForm').trigger('reset');
                 $('#farm_id').val('');
-                modal.show();
+                $('#farmModal').modal('show');
             });
 
             $('#farmForm').submit(function(e) {
                 e.preventDefault();
 
-                const id = $('#farm_id').val();
-                const url = id ? `/farms/${id}` : '/farms';
-                const method = id ? 'PUT' : 'POST';
+                var $form = $(this);
+                var id = $('#farm_id').val();
+                var formData = $form.serialize();
 
-                $.ajax({
-                    url: url,
-                    method: method,
-                    data: {
-                        name: $('#name').val(),
-                        owner: $('#owner').val(),
-                        address: $('#address').val(),
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function() {
-                        location.reload();
-                    },
-                    error: function(xhr) {
-                        alert('Error: ' + (xhr.responseJSON?.message ||
-                            'Something went wrong'));
-                    }
-                });
+                if (id) {
+                    $.ajax({
+                            url: '/farms/' + id,
+                            type: 'PUT',
+                            data: formData
+                        })
+                        .done(function() {
+                            $('#farmModal').modal('hide');
+                            location.reload();
+                        })
+                        .fail(function(xhr) {
+                            alert('Error: ' + (xhr.responseJSON?.message || 'Failed to update farm'));
+                        });
+                } else {
+                    $.post('/farms', formData)
+                        .done(function() {
+                            $('#farmModal').modal('hide');
+                            location.reload();
+                        })
+                        .fail(function(xhr) {
+                            alert('Error: ' + (xhr.responseJSON?.message || 'Failed to create farm'));
+                        });
+                }
             });
 
-            $('.editFarm').click(function() {
-                const id = $(this).closest('tr').data('id');
-                const $btn = $(this);
+            $(document).on('click', '.editFarm', function() {
+                var id = $(this).closest('tr').data('id');
+                var $btn = $(this);
 
                 $btn.prop('disabled', true).text('Loading...');
 
-                $.ajax({
-                    url: `/farms/${id}`,
-                    method: 'GET',
-                    success: function(response) {
-                        const farm = response.farm;
+                $.get('/farms/' + id)
+                    .done(function(response) {
+                        var farm = response.farm;
                         $('#farm_id').val(farm.id);
                         $('#name').val(farm.name);
                         $('#owner').val(farm.owner);
                         $('#address').val(farm.address || '');
-
-                        modal.show();
-                    },
-                    error: function() {
-                        showToast('Failed to load farm data.', 'danger');
-                    },
-                    complete: function() {
+                        $('#farmModal').modal('show');
+                    })
+                    .fail(function() {
+                        alert('Failed to load farm data');
+                    })
+                    .always(function() {
                         $btn.prop('disabled', false).text('Edit');
-                    }
-                });
+                    });
             });
 
-            let deleteId = null;
-            $('.deleteFarm').click(function() {
+            var deleteId = null;
+
+            $(document).on('click', '.deleteFarm', function() {
                 deleteId = $(this).closest('tr').data('id');
                 $('#confirmDeleteModal').modal('show');
             });
@@ -187,21 +199,32 @@
                 if (!deleteId) return;
 
                 $.ajax({
-                    url: `/farms/${deleteId}`,
-                    method: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function() {
+                        url: '/farms/' + deleteId,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        }
+                    })
+                    .done(function() {
                         $('#confirmDeleteModal').modal('hide');
                         location.reload();
-                        showToast('Data berhasil dihapus.', 'success');
-                    },
-                    error: function() {
+                    })
+                    .fail(function() {
                         $('#confirmDeleteModal').modal('hide');
-                        showToast('Gagal menghapus data.', 'danger');
-                    }
-                });
+                        alert('Failed to delete farm');
+                    });
+            });
+
+            $('#perPageSelect').change(function() {
+                const perPage = $(this).val();
+                const $select = $(this);
+
+                $select.prop('disabled', true);
+
+                const url = new URL(window.location);
+                url.searchParams.set('per_page', perPage);
+                url.searchParams.delete('page');
+                window.location.href = url.toString();
             });
         });
     </script>
