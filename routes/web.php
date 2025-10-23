@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\FarmController;
 use App\Models\Farm;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::get('/farms', [FarmController::class, 'index'])->name('web.farms.index');
 Route::post('/farms', [FarmController::class, 'store'])->name('web.farms.store');
