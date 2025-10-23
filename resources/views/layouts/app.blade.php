@@ -18,7 +18,7 @@
         rel="stylesheet"> --}}
 
     <link href="{{ asset('css/nunito.css') }}" rel="stylesheet">
-    
+
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
@@ -56,11 +56,8 @@
 
     @include('components.partials.logout-modal')
 
-    {{-- <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script> --}}
-    {{-- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}
-
     <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
