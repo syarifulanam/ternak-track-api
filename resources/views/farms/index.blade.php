@@ -7,19 +7,19 @@
                 <form method="GET" action="{{ url('/farms') }}" class="row g-3">
                     <div class="col-md-4">
                         <label for="search" class="form-label">Search by Name</label>
-                        <input type="text" class="form-control" id="search" name="search"
+                        <input type="text" class="form-control form-control-sm" id="search" name="search"
                             value="{{ request('search') }}" placeholder="Enter farms name...">
                     </div>
                     <div class="col-md-4">
                         <label for="search_owner" class="form-label">Search by Owner</label>
-                        <input type="text" class="form-control form-sm" id="search_owner" name="search_owner"
+                        <input type="text" class="form-control form-control-sm" id="search_owner" name="search_owner"
                             value="{{ request('search_owner') }}" placeholder="Enter farms owner...">
                     </div>
                     <div class="col-md-4 d-flex align-items-end">
                         <div class="d-flex gap-2 w-100">
                             <input type="hidden" name="per_page" value="{{ request('per_page', 10) }}">
 
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary btn-sm">
                                 Search
                             </button>
 
@@ -38,8 +38,8 @@
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="mb-0">List Farms</h6>
-                <div class="d-flex gap-2">
-                    <select class="form-select form-select-sm" id="perPageSelect" style="width: auto;">
+                <div class="mr-2">
+                    <select class="custom-select custom-select-sm" id="perPageSelect" style="width: auto;">
                         <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 per page</option>
                         <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10 per page</option>
                         <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 per page</option>
@@ -67,8 +67,12 @@
                                 <td class="owner" style="text-align: left;">{{ $f->owner }}</td>
                                 <td class="address" style="text-align: left;">{{ $f->address }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning editFarm">Edit</button>
-                                    <button class="btn btn-sm btn-danger deleteFarm">Delete</button>
+                                    <button class="btn btn-sm btn-warning editFarm">
+                                        <i class="fa fa-pencil mr-1"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-danger deleteFarm">
+                                        <i class="fa fa-trash mr-1"></i> Delete
+                                    </button>
                                 </td>
                             </tr>
                         @empty
