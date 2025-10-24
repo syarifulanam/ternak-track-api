@@ -18,10 +18,16 @@
                     <div class="col-md-4 d-flex align-items-end">
                         <div class="d-flex gap-2 w-100">
                             <input type="hidden" name="per_page" value="{{ request('per_page', 10) }}">
-                            <button type="submit" class="btn btn-primary">Search</button>
+
+                            <button type="submit" class="btn btn-primary">
+                                Search
+                            </button>
+
                             @if (request('search') || request('search_owner'))
                                 <a href="{{ route('web.farms.index', ['per_page' => request('per_page', 10)]) }}"
-                                    class="btn btn-outline-secondary">Clear</a>
+                                    class="btn btn-outline-secondary">
+                                    Clear
+                                </a>
                             @endif
                         </div>
                     </div>
@@ -29,80 +35,69 @@
             </div>
         </div>
 
-        <div class="card-body p-0">
+        <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="mb-0">List Farms</h6>
-                <form id="perPageForm" method="GET" class="mb-0">
-                    <div class="form-row align-items-center">
-                        <div class="col-auto my-1 d-flex align-items-center">
-                            <label for="perPageSelect" class="me-2 mb-0">Show</label>
-                            <select name="per_page" id="perPageSelect" class="custom-select custom-select-sm mr-sm-2">
-                                <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
-                                <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
-                                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
-                                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                            </select>
-                            <label for="perPageSelect" class="mb-0">entries</label>
-                        </div>
-                    </div>
-                </form>
+                <div class="d-flex gap-2">
+                    <select class="form-select form-select-sm" id="perPageSelect" style="width: auto;">
+                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 per page</option>
+                        <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10 per page</option>
+                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 per page</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 per page</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary" id="addFarmBtn">+ Add</button>
+                </div>
             </div>
-        </div>
-
-        <div class="card-body p-0">
-            <table class="table table-bordered align-middle mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th width="5%">#</th>
-                        <th>Name</th>
-                        <th>Owner</th>
-                        <th>Address</th>
-                        <th width="15%">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="farmTableBody">
-                    @forelse ($farms as $i => $f)
-                        <tr data-id="{{ $f->id }}">
-                            <td>{{ ($farms->currentPage() - 1) * $farms->perPage() + $loop->iteration }}</td>
-                            <td class="name text-start">{{ $f->name }}</td>
-                            <td class="owner text-start">{{ $f->owner }}</td>
-                            <td class="address text-start">{{ $f->address }}</td>
-                            <td>
-                                <div class="btn-group" role="group">
-                                    <button type="button" class="btn btn-sm btn-warning editFarm">
-                                        <i class="bi bi-pencil-square"></i> Edit
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger deleteFarm">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
+            <div class="card-body">
+                <table class="table table-bordered align-middle">
+                    <thead class="table-light">
                         <tr>
-                            <td colspan="6" class="text-center text-muted py-4">
-                                @if (request('search') || request('search_email'))
-                                    <i class="fas fa-search fa-2x mb-2"></i><br>
-                                    No farms found matching your search criteria<br>
-                                    <small>Try different keywords or <a
-                                            href="{{ route('farms.index') }}?per_page={{ request('per_page', 10) }}">clear
-                                            filters</a></small>
-                                @else
-                                    <i class="fas fa-inbox fa-2x mb-2"></i><br>
-                                    No farms found<br>
-                                    <small>Start by adding your first farm</small>
-                                @endif
-                            </td>
+                            <th width="5%">#</th>
+                            <th>Name</th>
+                            <th>Owner</th>
+                            <th>Address</th>
+                            <th width="15%">Action</th>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
-            <div>
+                    </thead>
+                    <tbody id="farmTableBody">
+                        @forelse ($farms as $i => $f)
+                            <tr data-id="{{ $f->id }}">
+                                <td>{{ ($farms->currentPage() - 1) * $farms->perPage() + $loop->iteration }}</td>
+                                <td class="name" style="text-align: left;">{{ $f->name }}</td>
+                                <td class="owner" style="text-align: left;">{{ $f->owner }}</td>
+                                <td class="address" style="text-align: left;">{{ $f->address }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning editFarm">Edit</button>
+                                    <button class="btn btn-sm btn-danger deleteFarm">Delete</button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="text-center text-muted py-4">
+                                    @if (request('search') || request('search_email'))
+                                        <i class="fas fa-search fa-2x mb-2"></i>
+                                        <br>No farms found matching your search criteria
+                                        <br>
+                                        <small>Try different keywords or <a
+                                                href="{{ route('farms.index') }}?per_page={{ request('per_page', 10) }}">clear
+                                                filters</a></small>
+                                    @else
+                                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                                        <br>No farms found
+                                        <br>
+                                        <small>Start by adding your first farm</small>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+
                 @if ($farms->hasPages())
-                    <div class="mt-3 text-center">
-                        <div class="text-muted small mb-2">
-                            Showing {{ $farms->firstItem() }} to {{ $farms->lastItem() }} of {{ $farms->total() }}
-                            results
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <div class="text-muted small">
+                            Showing {{ $farms->firstItem() }} to {{ $farms->lastItem() }} of
+                            {{ $farms->total() }} results
                         </div>
                         <div>
                             {{ $farms->links('pagination.custom') }}
@@ -111,9 +106,7 @@
                 @endif
             </div>
         </div>
-
     </div>
-
     @include('components.toast_message')
     @include('components.modal_delete')
     @include('components.modal_farm')
