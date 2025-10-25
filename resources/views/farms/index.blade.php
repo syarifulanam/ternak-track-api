@@ -75,8 +75,14 @@
                                 <td class="owner" style="text-align: left;">{{ $f->owner }}</td>
                                 <td class="address" style="text-align: left;">{{ $f->address }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning editFarm">Edit</button>
-                                    <button class="btn btn-sm btn-danger deleteFarm">Delete</button>
+                                    <div class="btn-group" role="group" aria-label="Farm Actions">
+                                        <button type="button" class="btn btn-outline-warning btn-md" title="Edit">
+                                            <i class="fa fa-pencil-alt"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger btn-md" title="Delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
