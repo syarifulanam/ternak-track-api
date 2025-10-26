@@ -60,11 +60,11 @@
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th width="5%">#</th>
+                            <th width="8%">#</th>
                             <th>Name</th>
                             <th>Owner</th>
                             <th>Address</th>
-                            <th width="15%">Action</th>
+                            <th width="7%">Action</th>
                         </tr>
                     </thead>
                     <tbody id="farmTableBody">
@@ -76,10 +76,12 @@
                                 <td class="address" style="text-align: left;">{{ $f->address }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Farm Actions">
-                                        <button type="button" class="btn btn-outline-warning btn-md" title="Edit">
+                                        <button type="button" class="btn btn-outline-warning btn-md editFarm"
+                                            title="Edit">
                                             <i class="fa fa-pencil-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger btn-md" title="Delete">
+                                        <button type="button" class="btn btn-outline-danger btn-md deleteFarm"
+                                            title="Delete">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </div>

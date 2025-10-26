@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 
 class CageController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cages = Cage::latest()->get();
+        $perPage = $request->get('per_page', 10);
+        $cages = Cage::latest()->paginate($perPage);
+
+        $cages->appends($request->query());
         return view('cages.index', compact('cages'));
     }
 
@@ -22,7 +25,13 @@ class CageController extends Controller
         ]);
 
         $cage = Cage::create($data);
-        return response()->json(['status' => 'success', 'cage' =>$cage]);
+        return response()->json(['status' => 'success', 'cage' => $cage]);
+    }
+
+    public function show($id)
+    {
+        $customer = Cage::findOrFail($id);
+        return response()->json(['status' => 'success', 'cage' => $customer]);
     }
 
     public function destroy($id)
