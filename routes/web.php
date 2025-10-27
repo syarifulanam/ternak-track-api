@@ -19,6 +19,6 @@ Route::delete('/farms/{id}', [FarmController::class, 'destroy'])->name('web.farm
 
 Route::get('/cages', [CageController::class, 'index'])->name('web.cages.index');
 Route::post('/cages', [CageController::class, 'store'])->name('web.cages.store');
+Route::get('/cages/{id}', [CageController::class, 'show'])->name('web.cages.show');
 Route::put('/cages/{id}', [CageController::class, 'update'])->name('web.cages.update');
-Route::get('/customer/{id}', [CageController::class, 'show'])->name('customer.show');
 Route::delete('/cages/{id}', [CageController::class, 'destroy'])->name('web.cages.destroy');

@@ -4,17 +4,17 @@
     <div class="container-fluid">
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <form method="GET" action="{{ url('/cages') }}" class="row">
+                <form method="GET" action="{{ route('web.cages.index') }}" class="row g-3">
                     <div class="col-md-4">
-                        <label for="search_name" class="form-label">Search by Name</label>
-                        <input type="text" class="form-control form-control-sm" id="search_name" name="search_name"
-                            value="{{ request('search_name') }}" placeholder="Enter cage name...">
+                        <label for="search" class="form-label">Search by Cage Name</label>
+                        <input type="text" class="form-control form-control-sm" id="search" name="search"
+                            value="{{ request('search') }}" placeholder="Enter cage name...">
                     </div>
 
                     <div class="col-md-4">
-                        <label for="search_cage" class="form-label">Search by Cages</label>
-                        <input type="text" class="form-control form-control-sm" id="search_cage" name="search_cage"
-                            value="{{ request('search_cage') }}" placeholder="Enter cage name...">
+                        <label for="search_capacity" class="form-label">Search by Cages</label>
+                        <input type="number" class="form-control form-control-sm" id="search_capacity"
+                            name="search_capacity" value="{{ request('search_capacity') }}" placeholder="Enter capacity...">
                     </div>
 
                     <div class="col-md-4 d-flex align-items-end">
@@ -22,8 +22,9 @@
                             <button type="submit" class="btn btn-primary btn-sm mr-2 px-3 py-2">
                                 Search
                             </button>
-                            @if (request('search_name') || request('search_cage'))
-                                <a href="{{ route('web.cages.index') }}" class="btn btn-outline-secondary btn-sm px-3 py-2">
+                            @if (request('search') || request('search_capacity'))
+                                <a href="{{ route('web.cages.index', ['per_page' => request('per_page', 10)]) }}"
+                                    class="btn btn-outline-secondary">
                                     Clear
                                 </a>
                             @endif
@@ -60,9 +61,9 @@
                     <thead class="table-light">
                         <tr>
                             <th width="8%">#</th>
-                            <th>Farm</th>
-                            <th>Name</th>
-                            <th>Capacity</th>
+                            <th>Farm Name</th>
+                            <th>Cage Name</th>
+                            <th>Cage Capacity</th>
                             <th width="10%">Action</th>
                         </tr>
                     </thead>
@@ -71,7 +72,7 @@
                             <tr data-id="{{ $c->id }}">
                                 <td>{{ ($cages->currentPage() - 1) * $cages->perPage() + $loop->iteration }}</td>
                                 <td data-farm="{{ $c->farm_id }}">{{ $c->farm->name ?? '-' }}</td>
-                                <td>{{ $c->name }}</td>
+                                <td>{{ $c->name }} ({{ $c->id }})</td>
                                 <td>{{ $c->capacity }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Cage Actions">
@@ -120,76 +121,101 @@
             </div>
         </div>
     </div>
-
-    @include('components.modal_cage', ['cages' => $cages])
+    @include('components.toast_message')
+    @include('components.modal_delete')
+    @include('components.modal_cage')
 @endsection
 
 @section('scripts')
     <script>
         $(function() {
-            const modal = new bootstrap.Modal('#cageModal');
+            // $(document).on('keyup', function(e) {
+            //     if (e.key === 'Escape') {
+            //         $('.modal.show').modal('hide');
+            //     }
+            // });
+
+            // $('.modal').on('click', function(e) {
+            //     if (e.target === this) {
+            //         $(this).modal('hide');
+            //     }
+            // });
+
+            // ketika button ADD di klik
             $('#addCageBtn').click(function() {
-                $('#cageForm')[0].reset();
-                $('#cage_id').val('');
-                modal.show();
+                $('#cageForm').trigger('reset'); // reset form data terakhir
+                $('#cage_id').val(''); // untuk hapus id terakhir
+                $('#cageModal').modal('show'); // ini untuk mebuka / memunculkan modal 
+                // $('#cageModal').modal('show'); // ini untuk menutup modal
             });
 
-            $('#cageForm').submit(function(e) {
-                e.preventDefault();
+            // ketika button EDIT di klik
+            $(document).on('click', '.editCage', function() {
+                var cageId = $(this).closest('tr').data('id');
+                console.log("cageId: " + cageId);
 
-                const id = $('#cage_id').val();
-                const url = id ? `/cages/${id}` : '/cages';
-                const method = id ? 'PUT' : 'POST';
-
-                $.ajax({
-                    url: url,
-                    method: method,
-                    data: {
-                        farm_id: $('#farm_id').val(),
-                        name: $('#name').val(),
-                        capacity: $('#capacity').val(),
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function() {
-                        modal.hide();
-                        location.reload();
-                    },
-                    error: function(xhr) {
-                        alert('Error: ' + (xhr.responseJSON?.message || 'Terjadi kesalahan.'));
-                    }
-                });
-            });
-
-            $('.editCage').click(function() {
-                const id = $(this).closest('tr').data('id');
-                const $btn = $(this);
-                $btn.prop('disabled', true).text('Loading...');
-
-                $.ajax({
-                    url: `/cages/${id}`,
-                    method: 'GET',
-                    success: function(response) {
-                        const cage = response.cage;
-
+                // muncul DATA by API di dalam FORM Modal 
+                $.get('/cages/' + cageId)
+                    .done(function(response) {
+                        var cage = response.cage;
                         $('#cage_id').val(cage.id);
                         $('#farm_id').val(cage.farm_id);
                         $('#name').val(cage.name);
                         $('#capacity').val(cage.capacity);
-
-                        modal.show();
-                    },
-                    error: function() {
-                        alert('Gagal memuat data cage.');
-                    },
-                    complete: function() {
-                        $btn.prop('disabled', false).text('Edit');
-                    }
-                });
+                        $('#cageModal').modal('show'); // ini untuk mebuka / memunculkan modal 
+                    })
+                    .fail(function() {
+                        alert('Failed to load cage data.');
+                    });
             });
 
-            let deleteId = null;
-            $('.deleteCage').click(function() {
+            // ketika ada button SUBMIT dari Form yang dikirim dari MODAL
+            $('#cageForm').submit(function(e) {
+                e.preventDefault(); // mencegah form reload halaman setelah submit
+
+                // untuk ambil data id baik itu ada atau kosong 
+                var id = $('#cage_id').val();
+
+                // untuk ambil data dari body modal form by ID cageForm
+                var formData = $(this).serialize();
+
+                if (id) {
+                    // jika id / cage_id ada isinya maka 'EDIT DATA'
+                    // ajax itu untuk lempar data by API bukan by PHPnya
+                    $.ajax({
+                            url: '/cages/' + id,
+                            type: 'PUT',
+                            data: formData
+                        })
+                        .done(function() {
+                            $('#cageModal').modal('hide'); // tutup modal
+                            location.reload(); // refresh halaman 
+                        })
+                        .fail(function(xhr) {
+                            alert('Error: ' + (xhr.responseJSON?.message || 'Terjadi kesalahan.'));
+                        });
+                } else {
+                    // jika id / cage_id Gak Ada isinya maka 'TAMBAH DATA'
+                    $.post('/cages', formData)
+                        .done(function() {
+                            $('#cageModal').modal('hide'); // tutup modal
+                            location.reload(); // refresh halaman 
+                        })
+                        .fail(function(xhr) {
+                            alert('Error: ' + (xhr.responseJSON?.message || 'Terjadi kesalahan.'));
+                        });
+                }
+            });
+
+            var deleteId = null;
+
+            $(document).on('click', '.deleteCage', function() {
+                //console.log("ngetes hapus");
+
                 deleteId = $(this).closest('tr').data('id');
+
+                //console.log("deleteId: " + deleteId);
+
                 $('#confirmDeleteModal').modal('show');
             });
 
@@ -197,20 +223,32 @@
                 if (!deleteId) return;
 
                 $.ajax({
-                    url: `/cages/${deleteId}`,
-                    method: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function() {
+                        url: '/cages/' + deleteId,
+                        type: 'DELETE',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        }
+                    })
+                    .done(function() {
                         $('#confirmDeleteModal').modal('hide');
                         location.reload();
-                    },
-                    error: function() {
+                    })
+                    .fail(function() {
                         $('#confirmDeleteModal').modal('hide');
-                        alert('Gagal menghapus data.');
-                    }
-                });
+                        alert('Failed to delete cage');
+                    });
+            });
+
+            $('#perPageSelect').change(function() {
+                const perPage = $(this).val();
+                const $select = $(this);
+
+                $select.prop('disabled', true);
+
+                const url = new URL(window.location);
+                url.searchParams.set('per_page', perPage);
+                url.searchParams.delete('page');
+                window.location.href = url.toString();
             });
         });
     </script>
