@@ -64,7 +64,7 @@
                             <th>Farm Name</th>
                             <th>Cage Name</th>
                             <th>Cage Capacity</th>
-                            <th width="10%">Action</th>
+                            <th width="8%">Action</th>
                         </tr>
                     </thead>
                     <tbody id="cageTableBody">
