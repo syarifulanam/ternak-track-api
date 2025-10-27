@@ -38,22 +38,14 @@
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="mb-0">List Farms</h6>
-
-                <div class="d-flex align-items-center" style="gap: 0.75rem;">
-                    <div class="d-flex align-items-center" style="gap: 0.5rem;">
-                        <label for="perPageSelect" class="mb-0 small text-muted">Show</label>
-                        <select name="per_page" id="perPageSelect" class="custom-select custom-select-sm mr-sm-2">
-                            <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
-                            <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10</option>
-                            <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
-                            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                        </select>
-                        <span class="small text-muted">entries</span>
-                    </div>
-
-                    <button type="button" class="btn btn-primary btn-sm px-3 py-1" id="addFarmBtn">
-                        <i class="fa fa-plus me-1"></i> Add
-                    </button>
+                <div class="mr-2">
+                    <select class="custom-select custom-select-sm" id="perPageSelect" style="width: auto;">
+                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 per page</option>
+                        <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10 per page</option>
+                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 per page</option>
+                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 per page</option>
+                    </select>
+                    <button class="btn btn-sm btn-primary" id="addFarmBtn">+ Add</button>
                 </div>
             </div>
             <div class="card-body">
@@ -75,16 +67,12 @@
                                 <td class="owner" style="text-align: left;">{{ $f->owner }}</td>
                                 <td class="address" style="text-align: left;">{{ $f->address }}</td>
                                 <td>
-                                    <div class="btn-group" role="group" aria-label="Farm Actions">
-                                        <button type="button" class="btn btn-outline-warning btn-md editFarm"
-                                            title="Edit">
-                                            <i class="fa fa-pencil-alt"></i>
-                                        </button>
-                                        <button type="button" class="btn btn-outline-danger btn-md deleteFarm"
-                                            title="Delete">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </div>
+                                    <button class="btn btn-sm btn-warning editFarm">
+                                        <i class="fa fa-pencil mr-1"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-danger deleteFarm">
+                                        <i class="fa fa-trash mr-1"></i> Delete
+                                    </button>
                                 </td>
                             </tr>
                         @empty
