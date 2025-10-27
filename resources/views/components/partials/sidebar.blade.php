@@ -30,14 +30,14 @@
             <li class="nav-item {{ request()->routeIs('growth.*') ? 'active' : '' }}">
                 <a class="nav-link" href="#">
                     <i class="fas fa-chart-line"></i>
-                    <span>Growth Records</span>
+                    <span>Growth</span>
                 </a>
             </li>
 
             <li class="nav-item {{ request()->routeIs('health.*') ? 'active' : '' }}">
                 <a class="nav-link" href="#">
                     <i class="fas fa-heartbeat"></i>
-                    <span>Health Records</span>
+                    <span>Health</span>
                 </a>
             </li>
 
@@ -51,7 +51,7 @@
             <li class="nav-item {{ request()->routeIs('feeding.*') ? 'active' : '' }}">
                 <a class="nav-link" href="#">
                     <i class="fas fa-utensils"></i>
-                    <span>Feeding Records</span>
+                    <span>Feeding</span>
                 </a>
             </li>
 
