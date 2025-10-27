@@ -60,11 +60,14 @@
                 <table class="table table-bordered align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th width="8%">#</th>
+                            <th width="5%">#</th>
                             <th>QR Code</th>
+                            <th>Animal Code</th>
                             <th>Species</th>
                             <th>Birth Date</th>
                             <th>Gender</th>
+                            <th>Status</th>
+                            <th>Cage</th>
                             <th width="10%">Action</th>
                         </tr>
                     </thead>
@@ -73,11 +76,13 @@
                             <tr data-id="{{ $a->id }}">
                                 <td>{{ ($animals->currentPage() - 1) * $animals->perPage() + $loop->iteration }}</td>
                                 <td>{{ $a->qr_code }}</td>
-                                <td>{{ $a->species }}</td>
+                                <td>{{ $a->code_animal }}</td>
+                                <td class="text-capitalize">{{ $a->species }}</td>
                                 <td>{{ $a->birth_date ? \Carbon\Carbon::parse($a->birth_date)->format('Y-m-d') : '-' }}
                                 </td>
-                                </td>
                                 <td class="text-capitalize">{{ $a->gender }}</td>
+                                <td class="text-capitalize">{{ $a->status }}</td>
+                                <td>{{ $a->cage->name ?? '-' }}</td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Animal Actions">
                                         <button type="button" class="btn btn-outline-warning btn-md editAnimal"
@@ -147,6 +152,7 @@
                         var animal = response.animal;
                         $('#animal_id').val(animal.id);
                         $('#qr_code').val(animal.qr_code);
+                        $('#code_animal').val(animal.code_animal);
                         $('#species').val(animal.species);
                         $('#birth_date').val(animal.birth_date);
                         $('#gender').val(animal.gender);

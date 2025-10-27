@@ -17,24 +17,38 @@
                 <div class="modal-body px-4 py-3">
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="qr_code" class="font-weight-semibold">QR Code</label>
+                            <label for="qr_code" class="font-weight-semibold">QR Code <span
+                                    class="text-danger">*</span></label>
                             <input type="text" id="qr_code" name="qr_code" class="form-control"
                                 placeholder="Enter QR code" required>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="species" class="font-weight-semibold">Species</label>
-                            <input type="text" id="species" name="species" class="form-control" maxlength="255"
-                                placeholder="Enter species" required>
+                            <label for="code_animal" class="font-weight-semibold">Animal Code <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" id="code_animal" name="code_animal" class="form-control"
+                                placeholder="Enter Animal Code" required>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="birth_date" class="font-weight-semibold">Birth Date</label>
-                            <input type="date" id="birth_date" name="birth_date" class="form-control">
+                            <label for="species" class="font-weight-semibold">Species <span
+                                    class="text-danger">*</span></label>
+                            <select id="species" name="species" class="form-control" required>
+                                <option value="">-- Select Species --</option>
+                                <option value="buffalo">Buffalo</option>
+                                <option value="goat">Goat</option>
+                            </select>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="gender" class="font-weight-semibold">Gender</label>
+                            <label for="birth_date" class="font-weight-semibold">Birth Date <span
+                                    class="text-danger">*</span></label>
+                            <input type="date" id="birth_date" name="birth_date" class="form-control" required>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="gender" class="font-weight-semibold">Gender <span
+                                    class="text-danger">*</span></label>
                             <select id="gender" name="gender" class="form-control" required>
                                 <option value="">-- Select Gender --</option>
                                 <option value="male">Male</option>
@@ -43,14 +57,19 @@
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="status" class="font-weight-semibold">Status</label>
-                            <input type="text" id="status" name="status" class="form-control" maxlength="100"
-                                placeholder="Enter status (e.g. Healthy)">
+                            <label for="status" class="font-weight-semibold">Status <span
+                                    class="text-danger">*</span></label>
+                            <select id="status" name="status" class="form-control" required>
+                                <option value="">-- Select Status --</option>
+                                <option value="alive">Alive</option>
+                                <option value="dead">Dead</option>
+                            </select>
                         </div>
 
                         <div class="form-group col-md-6">
-                            <label for="cage_id" class="font-weight-semibold">Cage</label>
-                            <select id="cage_id" name="cage_id" class="form-control">
+                            <label for="cage_id" class="font-weight-semibold">Cage <span
+                                    class="text-danger">*</span></label>
+                            <select id="cage_id" name="cage_id" class="form-control" required>
                                 <option value="">-- Select Cage --</option>
                                 @foreach ($cages as $cage)
                                     <option value="{{ $cage->id }}">{{ $cage->name }}</option>
