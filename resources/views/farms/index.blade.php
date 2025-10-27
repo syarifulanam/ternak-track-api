@@ -52,11 +52,11 @@
                 <table class="table table-bordered align-middle">
                     <thead class="table-light">
                         <tr>
-                            <th width="5%">#</th>
+                            <th width="8%">#</th>
                             <th>Name</th>
                             <th>Owner</th>
                             <th>Address</th>
-                            <th width="15%">Action</th>
+                            <th width="7%">Action</th>
                         </tr>
                     </thead>
                     <tbody id="farmTableBody">
@@ -119,17 +119,17 @@
 @section('scripts')
     <script>
         $(function() {
-            $(document).on('keyup', function(e) {
-                if (e.key === 'Escape') {
-                    $('.modal.show').modal('hide');
-                }
-            });
+            // $(document).on('keyup', function(e) {
+            //     if (e.key === 'Escape') {
+            //         $('.modal.show').modal('hide');
+            //     }
+            // });
 
-            $('.modal').on('click', function(e) {
-                if (e.target === this) {
-                    $(this).modal('hide');
-                }
-            });
+            // $('.modal').on('click', function(e) {
+            //     if (e.target === this) {
+            //         $(this).modal('hide');
+            //     }
+            // });
 
             $('#addFarmBtn').click(function() {
                 $('#farmForm').trigger('reset');
@@ -173,7 +173,9 @@
                 var id = $(this).closest('tr').data('id');
                 var $btn = $(this);
 
-                $btn.prop('disabled', true).text('Loading...');
+                var originalHtml = $btn.html();
+
+                $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin"></i>');
 
                 $.get('/farms/' + id)
                     .done(function(response) {
@@ -188,7 +190,7 @@
                         alert('Failed to load farm data');
                     })
                     .always(function() {
-                        $btn.prop('disabled', false).text('Edit');
+                        $btn.prop('disabled', false).html(originalHtml);
                     });
             });
 
