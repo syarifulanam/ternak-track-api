@@ -60,7 +60,7 @@
                 <table class="table table-bordered align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th width="5%">#</th>
+                            <th width="10%">#</th>
                             <th>QR Code</th>
                             <th>Animal Code</th>
                             <th>Species</th>

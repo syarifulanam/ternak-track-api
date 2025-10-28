@@ -82,7 +82,7 @@
                                             title="Edit">
                                             <i class="fa fa-pencil-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger btn-md deletefarm"
+                                        <button type="button" class="btn btn-outline-danger btn-md deleteFarm"
                                             title="Delete">
                                             <i class="fa fa-trash"></i>
                                         </button>
