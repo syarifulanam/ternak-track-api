@@ -98,7 +98,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center text-muted py-4">
+                                <td colspan="9" class="text-center text-muted py-4">
                                     @if (request('search_qr') || request('search_species'))
                                         <i class="fas fa-search fa-2x mb-2"></i><br>
                                         No animals found matching your search criteria.<br>
