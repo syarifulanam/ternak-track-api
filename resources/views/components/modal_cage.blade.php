@@ -7,7 +7,7 @@
 
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title font-weight-bold" id="cageModalLabel">
-                        <i class="fas fa-home mr-2"></i> Cage Form
+                        <i class="fas fa-home mr-2"></i><span id="modalTitle"></span>
                     </h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

@@ -143,6 +143,7 @@
                 $('#animalForm').trigger('reset');
                 $('#animal_id').val('');
                 $('#animalModal').modal('show');
+                $['#modalTitle'].text('Add Animal Form')
             });
 
             $(document).on('click', '.editAnimal', function() {
@@ -156,6 +157,9 @@
                         $('#species').val(animal.species);
                         $('#birth_date').val(animal.birth_date);
                         $('#gender').val(animal.gender);
+                        $('#status').val(animal.status);
+                        $('#cage_id').val(animal.cage_id);
+                        $('#modalTitle').text('Edit Animal Form')
                         $('#animalModal').modal('show');
                     })
                     .fail(function() {

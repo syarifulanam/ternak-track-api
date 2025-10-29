@@ -7,7 +7,7 @@
 
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title font-weight-bold" id="farmModalLabel">
-                        <i class="fas fa-tractor mr-2"></i> Farm Form
+                        <i class="fas fa-tractor mr-2"></i><span id="modalTitle"></span>
                     </h5>
                     <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>

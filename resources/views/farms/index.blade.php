@@ -149,6 +149,7 @@
                 $('#farmForm').trigger('reset');
                 $('#farm_id').val('');
                 $('#farmModal').modal('show');
+                $('#modalTitle').text('Add Farm Form')
             });
 
             $('#farmForm').submit(function(e) {
@@ -198,6 +199,7 @@
                         $('#name').val(farm.name);
                         $('#owner').val(farm.owner);
                         $('#address').val(farm.address || '');
+                        $('#modalTitle').text('Edit Farm Form')
                         $('#farmModal').modal('show');
                     })
                     .fail(function() {

@@ -146,6 +146,7 @@
                 $('#cageForm').trigger('reset'); // reset form data terakhir
                 $('#cage_id').val(''); // untuk hapus id terakhir
                 $('#cageModal').modal('show'); // ini untuk mebuka / memunculkan modal 
+                $('#modalTitle').text('Add Cage Form')
                 // $('#cageModal').modal('show'); // ini untuk menutup modal
             });
 
@@ -162,6 +163,7 @@
                         $('#farm_id').val(cage.farm_id);
                         $('#name').val(cage.name);
                         $('#capacity').val(cage.capacity);
+                        $('#modalTitle').text('Edit Cage Form')
                         $('#cageModal').modal('show'); // ini untuk mebuka / memunculkan modal 
                     })
                     .fail(function() {
