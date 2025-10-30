@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <form method="GET" action="{{ route('web.healths.index') }}" class="row g-3">
+                <form method="GET" action="{{ route('web.vaccinations.index') }}" class="row g-3">
                     <div class="col-md-4">
                         <label for="search_animal" class="form-label">Search by Animal Code</label>
                         <input type="text" class="form-control form-control-sm" id="search_animal" name="search_animal"
@@ -12,7 +12,7 @@
                     </div>
 
                     <div class="col-md-4">
-                        <label for="search_date" class="form-label">Search by Check Date</label>
+                        <label for="search_date" class="form-label">Search by Vaccination Date</label>
                         <input type="date" class="form-control form-control-sm" id="search_date" name="search_date"
                             value="{{ request('search_date') }}">
                     </div>
@@ -21,7 +21,7 @@
                         <div class="d-flex w-100">
                             <button type="submit" class="btn btn-primary btn-sm mr-2 px-3 py-2">Search</button>
                             @if (request('search_animal') || request('search_date'))
-                                <a href="{{ route('web.healths.index', ['per_page' => request('per_page', 10)]) }}"
+                                <a href="{{ route('web.vaccinations.index', ['per_page' => request('per_page', 10)]) }}"
                                     class="btn btn-outline-secondary">Clear</a>
                             @endif
                         </div>
@@ -32,7 +32,7 @@
 
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h6 class="mb-0">Health Records</h6>
+                <h6 class="mb-0">Vaccinations</h6>
 
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center mr-3">
@@ -46,8 +46,8 @@
                         <span class="small text-muted ml-1">entries</span>
                     </div>
 
-                    <button type="button" class="btn btn-primary btn-sm px-3 py-2" id="addHealthBtn">
-                        <i class="fa fa-plus mr-1"></i>Health
+                    <button type="button" class="btn btn-primary btn-sm px-3 py-2" id="addVaccinationBtn">
+                        <i class="fa fa-plus mr-1"></i> Vaccination
                     </button>
                 </div>
             </div>
@@ -58,32 +58,30 @@
                         <tr>
                             <th width="5%">#</th>
                             <th>Animal</th>
-                            <th>Check Date</th>
-                            <th>Diagnosis</th>
-                            <th>Treatment</th>
-                            <th>Veterinarian</th>
-                            <th>Notes</th>
+                            <th>Vaccination Date</th>
+                            <th>Vaccine Type</th>
+                            <th>Dosage</th>
+                            <th>Staff</th>
                             <th width="10%">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($health_record as $h)
-                            <tr data-id="{{ $h->id }}">
-                                <td>{{ ($health_record->currentPage() - 1) * $health_record->perPage() + $loop->iteration }}
+                        @forelse ($vaccinations as $v)
+                            <tr data-id="{{ $v->id }}">
+                                <td>{{ ($vaccinations->currentPage() - 1) * $vaccinations->perPage() + $loop->iteration }}
                                 </td>
-                                <td>{{ $h->animal ? $h->animal->code_animal . ' - ' . $h->animal->species : '-' }}</td>
-                                <td>{{ \Carbon\Carbon::parse($h->check_date)->format('Y-m-d') }}</td>
-                                <td>{{ $h->diagnosis }}</td>
-                                <td>{{ $h->treatment ?? '-' }}</td>
-                                <td>{{ $h->veterinarian }}</td>
-                                <td>{{ $h->notes ?? '-' }}</td>
+                                <td>{{ $v->animal ? $v->animal->code_animal . ' - ' . $v->animal->species : '-' }}</td>
+                                <td>{{ \Carbon\Carbon::parse($v->vaccination_date)->format('Y-m-d') }}</td>
+                                <td>{{ $v->vaccine_type }}</td>
+                                <td>{{ $v->dosage }}</td>
+                                <td>{{ $v->staff }}</td>
                                 <td>
                                     <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-outline-warning btn-md editHealth"
+                                        <button type="button" class="btn btn-outline-warning btn-md editVaccination"
                                             title="Edit">
                                             <i class="fa fa-pencil-alt"></i>
                                         </button>
-                                        <button type="button" class="btn btn-outline-danger btn-md deleteHealth"
+                                        <button type="button" class="btn btn-outline-danger btn-md deleteVaccination"
                                             title="Delete">
                                             <i class="fa fa-trash"></i>
                                         </button>
@@ -92,22 +90,22 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center text-muted py-4">
-                                    No health records found.
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    No vaccination records found.
                                 </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
 
-                @if ($health_record->hasPages())
+                @if ($vaccinations->hasPages())
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="text-muted small">
-                            Showing {{ $health_record->firstItem() }} to {{ $health_record->lastItem() }} of
-                            {{ $health_record->total() }}
+                            Showing {{ $vaccinations->firstItem() }} to {{ $vaccinations->lastItem() }} of
+                            {{ $vaccinations->total() }}
                         </div>
                         <div>
-                            {{ $health_record->links('pagination.custom') }}
+                            {{ $vaccinations->links('pagination.custom') }}
                         </div>
                     </div>
                 @endif
@@ -117,60 +115,58 @@
 
     @include('components.toast_message')
     @include('components.modal_delete')
-    @include('components.modal_health_record')
+    @include('components.modal_vaccination')
 @endsection
 
 @section('scripts')
     <script>
         $(function() {
-            $('#addHealthBtn').click(function() {
-                $('#healthForm').trigger('reset');
-                $('#health_id').val('');
-                $('#modalTitle').text('Add Health Record');
-                $('#healthModal').modal('show');
+            $('#addVaccinationBtn').click(function() {
+                $('#vaccinationForm').trigger('reset');
+                $('#vaccination_id').val('');
+                $('#modalTitle').text('Add Vaccination');
+                $('#vaccinationModal').modal('show');
             });
 
-            $(document).on('click', '.editHealth', function() {
+            $(document).on('click', '.editVaccination', function() {
                 var id = $(this).closest('tr').data('id');
-                $.get('/healths/' + id, function(response) {
-                    var h = response.health_record;
-                    $('#health_id').val(h.id);
-                    $('#animal_id').val(h.animal_id);
-                    $('#check_date').val(h.check_date);
-                    $('#diagnosis').val(h.diagnosis);
-                    $('#treatment').val(h.treatment);
-                    $('#veterinarian').val(h.veterinarian);
-                    $('#notes').val(h.notes);
-                    $('#modalTitle').text('Edit Health Record');
-                    $('#healthModal').modal('show');
+                $.get('/vaccinations/' + id, function(response) {
+                    var v = response.vaccination;
+                    $('#vaccination_id').val(v.id);
+                    $('#animal_id').val(v.animal_id);
+                    $('#vaccination_date').val(v.vaccination_date);
+                    $('#vaccine_type').val(v.vaccine_type);
+                    $('#dosage').val(v.dosage);
+                    $('#staff').val(v.staff);
+                    $('#modalTitle').text('Edit Vaccination');
+                    $('#vaccinationModal').modal('show');
                 });
             });
 
-            $('#healthForm').submit(function(e) {
+            $('#vaccinationForm').submit(function(e) {
                 e.preventDefault();
-                var id = $('#health_id').val();
+                var id = $('#vaccination_id').val();
                 var formData = $(this).serialize();
 
                 if (id) {
                     $.ajax({
-                        url: '/healths/' + id,
+                        url: '/vaccinations/' + id,
                         type: 'PUT',
                         data: formData
                     }).done(function() {
-                        $('#healthModal').modal('hide');
+                        $('#vaccinationModal').modal('hide');
                         location.reload();
                     });
                 } else {
-                    $.post('/healths', formData).done(function() {
-                        $('#healthModal').modal('hide');
+                    $.post('/vaccinations', formData).done(function() {
+                        $('#vaccinationModal').modal('hide');
                         location.reload();
                     });
                 }
             });
 
-
             var deleteId = null;
-            $(document).on('click', '.deleteHealth', function() {
+            $(document).on('click', '.deleteVaccination', function() {
                 deleteId = $(this).closest('tr').data('id');
                 $('#confirmDeleteModal').modal('show');
             });
@@ -178,7 +174,7 @@
             $('#btnConfirmDelete').click(function() {
                 if (!deleteId) return;
                 $.ajax({
-                    url: '/healths/' + deleteId,
+                    url: '/vaccinations/' + deleteId,
                     type: 'DELETE',
                     data: {
                         _token: '{{ csrf_token() }}'

@@ -51,7 +51,7 @@
                     </div>
 
                     <button type="button" class="btn btn-primary btn-sm px-3 py-2" id="addCageBtn">
-                        <i class="fa fa-plus mr-1"></i> Add Cage
+                        <i class="fa fa-plus mr-1"></i>Cage
                     </button>
                 </div>
             </div>

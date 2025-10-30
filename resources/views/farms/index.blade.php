@@ -53,7 +53,7 @@
                     </div>
 
                     <button type="button" class="btn btn-primary btn-sm px-3 py-2" id="addFarmBtn">
-                        <i class="fa fa-plus mr-1"></i> Add Farm
+                        <i class="fa fa-plus mr-1"></i>Farm
                     </button>
                 </div>
             </div>

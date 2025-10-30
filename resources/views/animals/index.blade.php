@@ -51,7 +51,7 @@
                     </div>
 
                     <button type="button" class="btn btn-primary btn-sm px-3 py-2" id="addAnimalBtn">
-                        <i class="fa fa-plus mr-1"></i> Add Animal
+                        <i class="fa fa-plus mr-1"></i>Animal
                     </button>
                 </div>
             </div>

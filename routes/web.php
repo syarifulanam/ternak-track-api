@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\VaccinationController;
 use App\Http\Controllers\HealthRecordController;
 use App\Http\Controllers\GrowthController;
 use App\Http\Controllers\CageController;
@@ -43,3 +44,9 @@ Route::post('/healths', [HealthRecordController::class, 'store'])->name('web.hea
 Route::get('/healths/{id}', [HealthRecordController::class, 'show'])->name('web.healths.show');
 Route::put('/healths/{id}', [HealthRecordController::class, 'update'])->name('web.healths.update');
 Route::delete('/healths/{id}', [HealthRecordController::class, 'destroy'])->name('web.healths.destroy');
+
+Route::get('/vaccinations', [VaccinationController::class, 'index'])->name('web.vaccinations.index');
+Route::post('/vaccinations', [VaccinationController::class, 'store'])->name('web.vaccinations.store');
+Route::get('/vaccinations/{id}', [VaccinationController::class, 'show'])->name('web.vaccinations.show');
+Route::put('/vaccinations/{id}', [VaccinationController::class, 'update'])->name('web.vaccinations.update');
+Route::delete('/vaccinations/{id}', [VaccinationController::class, 'destroy'])->name('web.vaccinations.destroy');
