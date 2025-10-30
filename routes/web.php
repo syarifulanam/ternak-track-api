@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\FeedingRecordController;
 use App\Http\Controllers\VaccinationController;
 use App\Http\Controllers\HealthRecordController;
 use App\Http\Controllers\GrowthController;
@@ -50,3 +51,9 @@ Route::post('/vaccinations', [VaccinationController::class, 'store'])->name('web
 Route::get('/vaccinations/{id}', [VaccinationController::class, 'show'])->name('web.vaccinations.show');
 Route::put('/vaccinations/{id}', [VaccinationController::class, 'update'])->name('web.vaccinations.update');
 Route::delete('/vaccinations/{id}', [VaccinationController::class, 'destroy'])->name('web.vaccinations.destroy');
+
+Route::get('/feedings', [FeedingRecordController::class, 'index'])->name('web.feedings.index');
+Route::post('/feedings', [FeedingRecordController::class, 'store'])->name('web.feedings.store');
+Route::get('/feedings/{id}', [FeedingRecordController::class, 'show'])->name('web.feedings.show');
+Route::put('/feedings/{id}', [FeedingRecordController::class, 'update'])->name('web.feedings.update');
+Route::delete('/feedings/{id}', [FeedingRecordController::class, 'destroy'])->name('web.feedings.destroy');
