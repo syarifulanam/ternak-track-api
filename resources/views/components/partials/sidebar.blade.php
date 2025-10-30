@@ -25,15 +25,15 @@
 
     <div class="sidebar-heading">Daily</div>
 
-    <li class="nav-item {{ Request::is('growth*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/growth') }}">
+    <li class="nav-item {{ Request::is('growths*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/growths') }}">
             <i class="fas fa-chart-line fa-fw"></i>
             <span>Growth</span>
         </a>
     </li>
 
-    <li class="nav-item {{ Request::is('health*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/health') }}">
+    <li class="nav-item {{ Request::is('healths*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/healths') }}">
             <i class="fas fa-heartbeat fa-fw"></i>
             <span>Health</span>
         </a>
@@ -46,15 +46,15 @@
         </a>
     </li>
 
-    <li class="nav-item {{ Request::is('feeding*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/feeding') }}">
+    <li class="nav-item {{ Request::is('feedings*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/feedings') }}">
             <i class="fas fa-utensils fa-fw"></i>
             <span>Feeding</span>
         </a>
     </li>
 
-    <li class="nav-item {{ Request::is('breeding*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('/breeding') }}">
+    <li class="nav-item {{ Request::is('breedings*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/breedings') }}">
             <i class="fas fa-venus-mars fa-fw"></i>
             <span>Breeding</span>
         </a>
