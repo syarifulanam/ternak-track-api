@@ -11,6 +11,7 @@ class Animal extends Model
 
     protected $fillable = [
         'qr_code',
+        'code_animal',
         'species',
         'birth_date',
         'gender',
@@ -53,5 +54,10 @@ class Animal extends Model
     public function sales()
     {
         return $this->hasMany(sale::class);
+    }
+
+    public function cage()
+    {
+        return $this->belongsTo(Cage::class);
     }
 }

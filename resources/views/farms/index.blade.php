@@ -38,25 +38,35 @@
         <div class="card shadow-sm">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="mb-0">List Farms</h6>
-                <div class="mr-2">
-                    <select class="custom-select custom-select-sm" id="perPageSelect" style="width: auto;">
-                        <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 per page</option>
-                        <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10 per page</option>
-                        <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 per page</option>
-                        <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 per page</option>
-                    </select>
-                    <button class="btn btn-sm btn-primary" id="addFarmBtn">+ Add</button>
+
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center mr-3">
+                        <label for="perPageSelect" class="mb-0 small text-muted mr-1">Show</label>
+                        <select name="per_page" id="perPageSelect" class="custom-select custom-select-sm">
+                            <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5</option>
+                            <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10
+                            </option>
+                            <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                            <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                        </select>
+                        <span class="small text-muted ml-1">entries</span>
+                    </div>
+
+                    <button type="button" class="btn btn-primary btn-sm px-3 py-2" id="addFarmBtn">
+                        <i class="fa fa-plus mr-1"></i> Add Farm
+                    </button>
                 </div>
             </div>
+
             <div class="card-body">
-                <table class="table table-bordered align-middle">
+                <table class="table table-bordered align-middle mb-0">
                     <thead class="table-light">
                         <tr>
                             <th width="8%">#</th>
                             <th>Name</th>
                             <th>Owner</th>
                             <th>Address</th>
-                            <th width="7%">Action</th>
+                            <th width="8%">Action</th>
                         </tr>
                     </thead>
                     <tbody id="farmTableBody">
@@ -67,12 +77,16 @@
                                 <td class="owner" style="text-align: left;">{{ $f->owner }}</td>
                                 <td class="address" style="text-align: left;">{{ $f->address }}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-warning editFarm">
-                                        <i class="fa fa-pencil mr-1"></i> Edit
-                                    </button>
-                                    <button class="btn btn-sm btn-danger deleteFarm">
-                                        <i class="fa fa-trash mr-1"></i> Delete
-                                    </button>
+                                    <div class="btn-group" role="group" aria-label="Farm Actions">
+                                        <button type="button" class="btn btn-outline-warning btn-md editFarm"
+                                            title="Edit">
+                                            <i class="fa fa-pencil-alt"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-outline-danger btn-md deleteFarm"
+                                            title="Delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         @empty
@@ -135,6 +149,7 @@
                 $('#farmForm').trigger('reset');
                 $('#farm_id').val('');
                 $('#farmModal').modal('show');
+                $('#modalTitle').text('Add Farm Form')
             });
 
             $('#farmForm').submit(function(e) {
@@ -184,6 +199,7 @@
                         $('#name').val(farm.name);
                         $('#owner').val(farm.owner);
                         $('#address').val(farm.address || '');
+                        $('#modalTitle').text('Edit Farm Form')
                         $('#farmModal').modal('show');
                     })
                     .fail(function() {
