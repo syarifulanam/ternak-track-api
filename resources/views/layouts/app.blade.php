@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Ternak Track</title>
-
+    <link rel="icon" href="{{ asset('img/dog.png') }}" type="image/png">
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> --}}
     <link href="{{ asset('css/nunito.css') }}" rel="stylesheet">

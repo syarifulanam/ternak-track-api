@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\GrowthController;
 use App\Http\Controllers\CageController;
 use App\Http\Controllers\FarmController;
 use App\Models\Farm;
@@ -29,3 +30,9 @@ Route::post('/animals', [AnimalController::class, 'store'])->name('web.animals.s
 Route::get('/animals/{id}', [AnimalController::class, 'show'])->name('web.animals.show');
 Route::put('/animals/{id}', [AnimalController::class, 'update'])->name('web.animals.update');
 Route::delete('/animals/{id}', [AnimalController::class, 'destroy'])->name('web.animals.destroy');
+
+Route::get('/growths', [GrowthController::class, 'index'])->name('web.growths.index');
+Route::post('/growths', [GrowthController::class, 'store'])->name('web.growths.store');
+Route::get('/growths/{id}', [GrowthController::class, 'show'])->name('web.growths.show');
+Route::put('/growths/{id}', [GrowthController::class, 'update'])->name('web.growths.update');
+Route::delete('/growths/{id}', [GrowthController::class, 'destroy'])->name('web.growths.destroy');
