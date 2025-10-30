@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\HealthRecordController;
 use App\Http\Controllers\GrowthController;
 use App\Http\Controllers\CageController;
 use App\Http\Controllers\FarmController;
@@ -36,3 +37,9 @@ Route::post('/growths', [GrowthController::class, 'store'])->name('web.growths.s
 Route::get('/growths/{id}', [GrowthController::class, 'show'])->name('web.growths.show');
 Route::put('/growths/{id}', [GrowthController::class, 'update'])->name('web.growths.update');
 Route::delete('/growths/{id}', [GrowthController::class, 'destroy'])->name('web.growths.destroy');
+
+Route::get('/healths', [HealthRecordController::class, 'index'])->name('web.healths.index');
+Route::post('/healths', [HealthRecordController::class, 'store'])->name('web.healths.store');
+Route::get('/healths/{id}', [HealthRecordController::class, 'show'])->name('web.healths.show');
+Route::put('/healths/{id}', [HealthRecordController::class, 'update'])->name('web.healths.update');
+Route::delete('/healths/{id}', [HealthRecordController::class, 'destroy'])->name('web.healths.destroy');
