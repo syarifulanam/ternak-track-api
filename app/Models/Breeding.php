@@ -22,4 +22,14 @@ class Breeding extends Model
     {
         return $this->belongsTo(Animal::class);
     }
+
+    public function dam()
+    {
+        return $this->belongsTo(Animal::class, 'dam_id');
+    }
+
+    public function sire()
+    {
+        return $this->belongsTo(Animal::class, 'sire_id');
+    }
 }

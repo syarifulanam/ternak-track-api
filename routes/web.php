@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\BreedingController;
 use App\Http\Controllers\FeedingRecordController;
 use App\Http\Controllers\VaccinationController;
 use App\Http\Controllers\HealthRecordController;
@@ -57,3 +58,9 @@ Route::post('/feedings', [FeedingRecordController::class, 'store'])->name('web.f
 Route::get('/feedings/{id}', [FeedingRecordController::class, 'show'])->name('web.feedings.show');
 Route::put('/feedings/{id}', [FeedingRecordController::class, 'update'])->name('web.feedings.update');
 Route::delete('/feedings/{id}', [FeedingRecordController::class, 'destroy'])->name('web.feedings.destroy');
+
+Route::get('/breedings', [BreedingController::class, 'index'])->name('web.breedings.index');
+Route::get('/breedings/{id}', [BreedingController::class, 'show'])->name('web.breedings.show');
+Route::post('/breedings', [BreedingController::class, 'store'])->name('web.breedings.store');
+Route::put('/breedings/{id}', [BreedingController::class, 'update'])->name('web.breedings.update');
+Route::delete('/breedings/{id}', [BreedingController::class, 'destroy'])->name('web.breedings.destroy');
