@@ -9,6 +9,7 @@ use App\Http\Controllers\CageController;
 use App\Http\Controllers\FarmController;
 use App\Models\Farm;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -16,44 +17,68 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::get('/farms', [FarmController::class, 'index'])->name('web.farms.index');
-Route::post('/farms', [FarmController::class, 'store'])->name('web.farms.store');
-Route::put('/farms/{id}', [FarmController::class, 'update'])->name('web.farms.update');
-Route::get('/farms/{id}', [FarmController::class, 'show'])->name('web.farms.show');
-Route::delete('/farms/{id}', [FarmController::class, 'destroy'])->name('web.farms.destroy');
+Route::prefix('users')->name('web.users.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::post('/', [UserController::class, 'store'])->name('store');
+    Route::get('/{id}', [UserController::class, 'show'])->name('show');
+    Route::put('/{id}', [UserController::class, 'update'])->name('update');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+    Route::put('{id}/password', [UserController::class, 'updatePassword'])->name('updatePassword');
+    Route::post('{id}/reset-password', [UserController::class, 'resetPassword'])->name('resetPassword');
+});
 
-Route::get('/cages', [CageController::class, 'index'])->name('web.cages.index');
-Route::post('/cages', [CageController::class, 'store'])->name('web.cages.store');
-Route::get('/cages/{id}', [CageController::class, 'show'])->name('web.cages.show');
-Route::put('/cages/{id}', [CageController::class, 'update'])->name('web.cages.update');
-Route::delete('/cages/{id}', [CageController::class, 'destroy'])->name('web.cages.destroy');
+Route::prefix('farms')->name('web.farms.')->group(function () {
+    Route::get('/', [FarmController::class, 'index'])->name('index');
+    Route::post('/', [FarmController::class, 'store'])->name('store');
+    Route::get('/{id}', [FarmController::class, 'show'])->name('show');
+    Route::put('/{id}', [FarmController::class, 'update'])->name('update');
+    Route::delete('/{id}', [FarmController::class, 'destroy'])->name('destroy');
+});
 
-Route::get('/animals', [AnimalController::class, 'index'])->name('web.animals.index');
-Route::post('/animals', [AnimalController::class, 'store'])->name('web.animals.store');
-Route::get('/animals/{id}', [AnimalController::class, 'show'])->name('web.animals.show');
-Route::put('/animals/{id}', [AnimalController::class, 'update'])->name('web.animals.update');
-Route::delete('/animals/{id}', [AnimalController::class, 'destroy'])->name('web.animals.destroy');
+Route::prefix('cages')->name('web.cages.')->group(function () {
+    Route::get('/', [CageController::class, 'index'])->name('index');
+    Route::post('/', [CageController::class, 'store'])->name('store');
+    Route::get('/{id}', [CageController::class, 'show'])->name('show');
+    Route::put('/{id}', [CageController::class, 'update'])->name('update');
+    Route::delete('/{id}', [CageController::class, 'destroy'])->name('destroy');
+});;
 
-Route::get('/growths', [GrowthController::class, 'index'])->name('web.growths.index');
-Route::post('/growths', [GrowthController::class, 'store'])->name('web.growths.store');
-Route::get('/growths/{id}', [GrowthController::class, 'show'])->name('web.growths.show');
-Route::put('/growths/{id}', [GrowthController::class, 'update'])->name('web.growths.update');
-Route::delete('/growths/{id}', [GrowthController::class, 'destroy'])->name('web.growths.destroy');
+Route::prefix('animals')->name('web.animals.')->group(function () {
+    Route::get('/', [AnimalController::class, 'index'])->name('index');
+    Route::post('/', [AnimalController::class, 'store'])->name('store');
+    Route::get('/{id}', [AnimalController::class, 'show'])->name('show');
+    Route::put('/{id}', [AnimalController::class, 'update'])->name('update');
+    Route::delete('/{id}', [AnimalController::class, 'destroy'])->name('destroy');
+});
 
-Route::get('/healths', [HealthRecordController::class, 'index'])->name('web.healths.index');
-Route::post('/healths', [HealthRecordController::class, 'store'])->name('web.healths.store');
-Route::get('/healths/{id}', [HealthRecordController::class, 'show'])->name('web.healths.show');
-Route::put('/healths/{id}', [HealthRecordController::class, 'update'])->name('web.healths.update');
-Route::delete('/healths/{id}', [HealthRecordController::class, 'destroy'])->name('web.healths.destroy');
+Route::prefix('growths')->name('web.growths.')->group(function () {
+    Route::get('/', [GrowthController::class, 'index'])->name('index');
+    Route::post('/', [GrowthController::class, 'store'])->name('store');
+    Route::get('/{id}', [GrowthController::class, 'show'])->name('show');
+    Route::put('/{id}', [GrowthController::class, 'update'])->name('update');
+    Route::delete('/{id}', [GrowthController::class, 'destroy'])->name('destroy');
+});
 
-Route::get('/vaccinations', [VaccinationController::class, 'index'])->name('web.vaccinations.index');
-Route::post('/vaccinations', [VaccinationController::class, 'store'])->name('web.vaccinations.store');
-Route::get('/vaccinations/{id}', [VaccinationController::class, 'show'])->name('web.vaccinations.show');
-Route::put('/vaccinations/{id}', [VaccinationController::class, 'update'])->name('web.vaccinations.update');
-Route::delete('/vaccinations/{id}', [VaccinationController::class, 'destroy'])->name('web.vaccinations.destroy');
+Route::prefix('healths')->name('web.healths.')->group(function () {
+    Route::get('/', [HealthRecordController::class, 'index'])->name('index');
+    Route::post('/', [HealthRecordController::class, 'store'])->name('store');
+    Route::get('/{id}', [HealthRecordController::class, 'show'])->name('show');
+    Route::put('/{id}', [HealthRecordController::class, 'update'])->name('update');
+    Route::delete('/{id}', [HealthRecordController::class, 'destroy'])->name('destroy');
+});
 
-Route::get('/feedings', [FeedingRecordController::class, 'index'])->name('web.feedings.index');
-Route::post('/feedings', [FeedingRecordController::class, 'store'])->name('web.feedings.store');
-Route::get('/feedings/{id}', [FeedingRecordController::class, 'show'])->name('web.feedings.show');
-Route::put('/feedings/{id}', [FeedingRecordController::class, 'update'])->name('web.feedings.update');
-Route::delete('/feedings/{id}', [FeedingRecordController::class, 'destroy'])->name('web.feedings.destroy');
+Route::prefix('vaccinations')->name('web.vaccinations.')->group(function () {
+    Route::get('/', [VaccinationController::class, 'index'])->name('index');
+    Route::post('/', [VaccinationController::class, 'store'])->name('store');
+    Route::get('/{id}', [VaccinationController::class, 'show'])->name('show');
+    Route::put('/{id}', [VaccinationController::class, 'update'])->name('update');
+    Route::delete('/{id}', [VaccinationController::class, 'destroy'])->name('destroy');
+});
+
+Route::prefix('feedings')->name('web.feedings.')->group(function () {
+    Route::get('/', [FeedingRecordController::class, 'index'])->name('index');
+    Route::post('/', [FeedingRecordController::class, 'store'])->name('store');
+    Route::get('/{id}', [FeedingRecordController::class, 'show'])->name('show');
+    Route::put('/{id}', [FeedingRecordController::class, 'update'])->name('update');
+    Route::delete('/{id}', [FeedingRecordController::class, 'destroy'])->name('destroy');
+});

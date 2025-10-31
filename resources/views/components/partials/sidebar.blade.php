@@ -99,6 +99,24 @@
         </a>
     </li>
 
+    <hr class="sidebar-divider">
+
+    <div class="sidebar-heading">Setting</div>
+
+    <li class="nav-item {{ Request::is('users*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/users') }}">
+            <i class="fas fa-user-cog fa-fw"></i>
+            <span>Users</span>
+        </a>
+    </li>
+
+    <li class="nav-item {{ Request::is('roles*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/roles') }}">
+            <i class="fas fa-user-shield fa-fw"></i>
+            <span>Roles</span>
+        </a>
+    </li>
+
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler -->
