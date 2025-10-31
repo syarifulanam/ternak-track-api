@@ -52,8 +52,8 @@ class BreedingController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'dam_id' => 'required|exists:animals,id',
-            'sire_id' => 'required|exists:animals,id',
+            'dam_id' => 'required|exists:animals,id|different:sire_id',
+            'sire_id' => 'required|exists:animals,id|different:dam_id',
             'mating_date' => 'required|date',
             'status' => 'required|string|max:255',
             'expected_birth_date' => 'nullable|date',

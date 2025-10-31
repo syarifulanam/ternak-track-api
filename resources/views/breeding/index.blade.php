@@ -5,19 +5,19 @@
         <div class="card shadow-sm mb-3">
             <div class="card-body">
                 <form method="GET" action="{{ route('web.breedings.index') }}" class="row g-3">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="search_dam" class="form-label">Search by Dam Code</label>
                         <input type="text" class="form-control form-control-sm" id="search_dam" name="search_dam"
                             value="{{ request('search_dam') }}" placeholder="Enter Dam Code...">
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="search_sire" class="form-label">Search by Sire Code</label>
                         <input type="text" class="form-control form-control-sm" id="search_sire" name="search_sire"
                             value="{{ request('search_sire') }}" placeholder="Enter Sire Code...">
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label for="search_status" class="form-label">Search by Status</label>
                         <select name="search_status" id="search_status" class="form-control form-control-sm">
                             <option value="">-- Select Status --</option>
@@ -28,7 +28,7 @@
                         </select>
                     </div>
 
-                    <div class="col-12 d-flex justify-content-end">
+                    <div class="col-md-3 d-flex align-items-end gap-2">
                         <button type="submit" class="btn btn-primary btn-sm mr-2 px-3 py-2">Search</button>
                         @if (request('search_dam') || request('search_sire') || request('search_status'))
                             <a href="{{ route('web.breedings.index', ['per_page' => request('per_page', 10)]) }}"
@@ -168,12 +168,18 @@
                     }).done(function() {
                         $('#breedingModal').modal('hide');
                         location.reload();
+                    }).fail(function(xhr) {
+                        console.log('Update Error:', xhr.responseJSON);
                     });
                 } else {
-                    $.post('/breedings', formData).done(function() {
-                        $('#breedingModal').modal('hide');
-                        location.reload();
-                    });
+                    $.post('/breedings', formData)
+                        .done(function() {
+                            $('#breedingModal').modal('hide');
+                            location.reload();
+                        })
+                        .fail(function(xhr) {
+                            console.log('Create Error:', xhr.responseJSON);
+                        });
                 }
             });
 
@@ -194,6 +200,8 @@
                 }).done(function() {
                     $('#confirmDeleteModal').modal('hide');
                     location.reload();
+                }).fail(function(xhr) {
+                    console.log('Delete Error:', xhr.responseJSON);
                 });
             });
 
